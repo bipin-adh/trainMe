@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bpn.trainme.domain.model.Product
 import com.bpn.trainme.domain.usecase.GetProductListUseCase
+import com.bpn.trainme.presentation.navigation.NavigationManager
+import com.bpn.trainme.presentation.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getProductListUseCase: GetProductListUseCase
+    private val getProductListUseCase: GetProductListUseCase,
+    private val navigationManager: NavigationManager
 ) : ViewModel() {
 
     // UI state
@@ -34,7 +37,15 @@ class HomeViewModel @Inject constructor(
         when(intent){
             is HomeIntent.LoadProducts -> loadProducts()
             is HomeIntent.ProductClicked -> viewModelScope.launch {
-                _eventFlow.send(HomeEvent.NavigateToDetail(intent.productId))
+//                _eventFlow.send(HomeEvent.NavigateToDetail(intent.productId))
+
+                navigationManager.navigate(
+                    NavigationManager.NavigationEvent.NavigateTo(
+                        route = Screen.ProductDetail.createRoute(
+                            intent.productId
+                        )
+                    )
+                )
             }
 
             // future intents like refresh filter here
@@ -77,7 +88,6 @@ class HomeViewModel @Inject constructor(
 
     // Events: one-time effects
     sealed class HomeEvent{
-        data class NavigateToDetail(val productId: Int): HomeEvent()
         data class  ShowError(val errorMsg: String): HomeEvent()
     }
 }

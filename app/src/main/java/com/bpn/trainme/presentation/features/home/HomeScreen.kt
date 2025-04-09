@@ -14,14 +14,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.bpn.trainme.domain.model.Product
 import com.bpn.trainme.presentation.features.home.HomeViewModel.HomeIntent
+import com.bpn.trainme.presentation.navigation.Screen
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel(),
-    onNavigateToDetail: (Int) -> Unit
+    viewModel: HomeViewModel = hiltViewModel()
     ) {
 
     val uiState = viewModel.uiState.collectAsState()
@@ -29,11 +30,6 @@ fun HomeScreen(
     LaunchedEffect(Unit) {
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
-                is HomeViewModel.HomeEvent.NavigateToDetail -> {
-                    // navigate to detail screen
-                    onNavigateToDetail(event.productId)
-                }
-
                 is HomeViewModel.HomeEvent.ShowError -> {
                     // show error
                 }

@@ -11,17 +11,28 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun ProductDetailScreen(
-    productId: Int,
+//    productId: Int,
     viewModel: ProductDetailViewModel = hiltViewModel()
 ) {
 
     val uiState = viewModel.uiState.collectAsState()
 
-    LaunchedEffect(productId) {
-        viewModel.processIntent(ProductDetailIntent.LoadProduct(productId))
+//    LaunchedEffect(productId) {
+//        viewModel.processIntent(ProductDetailIntent.LoadProduct(productId))
+//    }
+
+    LaunchedEffect(Unit) {
+        viewModel.eventFlow.collectLatest { event ->
+            when (event) {
+                is ProductDetailEvent.ShowError -> {
+
+               }
+            }
+        }
     }
 
     if(uiState.value.isLoading){
