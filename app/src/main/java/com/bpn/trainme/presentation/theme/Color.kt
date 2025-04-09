@@ -1,4 +1,4 @@
-package com.bpn.trainme.presentation.ui.theme
+package com.bpn.trainme.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

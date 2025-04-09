@@ -1,16 +1,17 @@
 package com.bpn.trainme.di
 
 import com.bpn.trainme.BuildConfig
-import com.bpn.trainme.network.ApiService
-import com.bpn.trainme.repository.Repository
-import com.bpn.trainme.repository.RepositoryImpl
+import com.bpn.trainme.data.remote.api.ProductApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import javax.inject.Singleton
 
@@ -19,15 +20,17 @@ import javax.inject.Singleton
 object NetworkModule {
     @Provides
     @Singleton
-    fun providesRetrofit(): ApiService = Retrofit.Builder()
-        .baseUrl(BuildConfig.BASE_URL)
-        .addConverterFactory(
-            Json.asConverterFactory(
-                "application/json; charset=UTF8".toMediaType()))
-        .build()
-        .create(ApiService::class.java)
+    fun providesRetrofit(): ProductApi {
 
-    @Provides
-    @Singleton
-    fun providesRepository(repositoryImpl: RepositoryImpl): Repository = repositoryImpl
+        val client = OkHttpClient.Builder()
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .build()
+
+        return Retrofit.Builder()
+            .baseUrl(BuildConfig.BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ProductApi::class.java)
+    }
 }

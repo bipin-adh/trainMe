@@ -1,6 +1,5 @@
-package com.bpn.trainme.presentation.ui.theme
+package com.bpn.trainme.presentation.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
