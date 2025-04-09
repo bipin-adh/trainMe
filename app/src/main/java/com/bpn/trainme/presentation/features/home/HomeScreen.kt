@@ -12,12 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.bpn.trainme.domain.model.Product
-import com.bpn.trainme.presentation.features.home.HomeViewModel.HomeIntent
-import com.bpn.trainme.presentation.navigation.Screen
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -26,38 +24,60 @@ fun HomeScreen(
     ) {
 
     val uiState = viewModel.uiState.collectAsState()
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
-                is HomeViewModel.HomeEvent.ShowError -> {
+                is HomeEvent.ShowError -> {
                     // show error
+
                 }
             }
         }
     }
 
-    if(uiState.value.isLoading){
-        CircularProgressIndicator(modifier = Modifier.fillMaxSize())
-    }else{
-        LazyColumn {
-            items(uiState.value.products) { product ->
-                ProductItem(
-                    product = product,
-                    onClick = {
-                        viewModel.processIntent(HomeIntent.ProductClicked(product.id))
+    uiState.value?.let { state->
+        when {
+            state.isLoading -> {
+                // show loading
+                CircularProgressIndicator(modifier = Modifier.fillMaxSize())
+            }
+
+            state.errorMsg != null ->{
+                Text(
+                    text = state.errorMsg,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+
+            state.products.isNotEmpty() -> {
+                // show products
+                LazyColumn {
+                    items(state.products) { product ->
+                        ProductItem(
+                            product = product,
+                            onClick = {
+                                viewModel.processIntent(HomeIntent.ProductClicked(product.id))
+                            }
+                        )
                     }
+                }
+            }
+
+            else -> {
+                // show empty
+                Text(
+                    text = "No products found",
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.fillMaxSize().padding(16.dp)
                 )
             }
         }
-    }
-
-    uiState.value.errorMsg?.let {error->
-        Text(
-            text = error,
-            color = MaterialTheme.colorScheme.error,
-            modifier = Modifier.padding(16.dp)
-        )
+    }?: run {
+        // show loading
+        CircularProgressIndicator(modifier = Modifier.fillMaxSize())
     }
 }
 

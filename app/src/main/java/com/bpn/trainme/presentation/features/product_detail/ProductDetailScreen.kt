@@ -35,19 +35,24 @@ fun ProductDetailScreen(
         }
     }
 
-    if(uiState.value.isLoading){
-        CircularProgressIndicator(modifier = Modifier.fillMaxSize())
-    }else{
-        uiState.value.product?.let { product->
-            Text(text = product.title, modifier = Modifier.padding(16.dp))
-        }
-    }
+    // render ui based on state
+    uiState.value?.let { state->
+        when{
+            state.isLoading -> {
+                CircularProgressIndicator(modifier = Modifier.fillMaxSize())
+            }
+            state.errorMsg != null -> {
+                Text(text = state.errorMsg,color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(16.dp))
+            }
 
-    uiState.value.errorMsg?.let { error->
-        Text(
-            text = error,
-            color = MaterialTheme.colorScheme.error,
-            modifier = Modifier.padding(16.dp)
-        )
+            state.product != null -> {
+                Text(text = state.product.title, modifier = Modifier.padding(16.dp))
+            }
+            else -> {
+                Text(text = "No product found", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(16.dp))
+            }
+        }
+    }?: run {
+        CircularProgressIndicator(modifier = Modifier.fillMaxSize())
     }
 }
