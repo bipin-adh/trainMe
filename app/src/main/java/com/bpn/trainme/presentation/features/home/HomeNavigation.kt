@@ -2,7 +2,7 @@ package com.bpn.trainme.presentation.features.home
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.bpn.trainme.domain.model.Product
+import com.bpn.trainme.domain.model.Exercise
 import kotlinx.serialization.Serializable
 
 
@@ -21,7 +21,7 @@ fun NavGraphBuilder.homeScreen(
 
 
 data class HomeState(
-    val products: List<Product>? = null
+    val exercises : List<Exercise>? = null
 )
 
 sealed interface HomeUiEvent {

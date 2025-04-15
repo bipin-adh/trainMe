@@ -1,6 +1,6 @@
 package com.bpn.trainme.presentation.features.home
 
-import com.bpn.trainme.domain.usecase.GetProductListUseCase
+import com.bpn.trainme.domain.usecase.GetExerciseUseCase
 import com.bpn.trainme.presentation.BaseViewModel
 import com.bpn.trainme.presentation.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -8,20 +8,20 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getProductListUseCase: GetProductListUseCase,
+    private val getExerciseUseCase: GetExerciseUseCase
 ) : BaseViewModel<HomeState, HomeUiEvent>() {
 
     init {
-        getProducts()
+        fetchExercises()
     }
 
-    fun getProducts(){
+    fun fetchExercises(offset: Int = 0){
         handleApiCall(
-            call = { getProductListUseCase() },
-            onSuccess = { products ->
+            call = { getExerciseUseCase(offset) },
+            onSuccess = { exercises ->
                 updateState(UiState.Success(
                     HomeState(
-                        products = products
+                        exercises = exercises
                     )
                 ))
 //                emitEvent(HomeUiEvent.NavigateToRegister)
@@ -29,4 +29,18 @@ class HomeViewModel @Inject constructor(
             onError = { throwable -> updateState(UiState.Error(throwable.message ?: "Unknown error")) }
         )
     }
+//    fun getProducts(){
+//        handleApiCall(
+//            call = { getExerciseUseCase() },
+//            onSuccess = { products ->
+//                updateState(UiState.Success(
+//                    HomeState(
+//                        products = products
+//                    )
+//                ))
+////                emitEvent(HomeUiEvent.NavigateToRegister)
+//            },
+//            onError = { throwable -> updateState(UiState.Error(throwable.message ?: "Unknown error")) }
+//        )
+//    }
 }

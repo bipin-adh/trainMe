@@ -15,10 +15,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.bpn.trainme.domain.model.Product
+import com.bpn.trainme.domain.model.Exercise
 import com.bpn.trainme.presentation.UiState
 
 
@@ -42,7 +43,7 @@ fun HomeScreen(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(text = "Login")
+                    Text(text = "Home")
                 }
             )
         }
@@ -50,12 +51,18 @@ fun HomeScreen(
         when(val state = uiState.value) {
             is UiState.Idle -> Text("Readty to load")
             is UiState.Loading -> CircularProgressIndicator()
-            is UiState.Error -> Text(state.message)
+            is UiState.Error -> {
+                Box(
+                    modifier = Modifier.fillMaxSize().padding(paddingValues = paddingValues),
+                    contentAlignment = Alignment.Center) {
+                    Text(text = state.message)
+                }
+            }
             is UiState.Success ->
                 Box( modifier = Modifier.fillMaxSize().padding(paddingValues = paddingValues)) {
-                    ProductListContent(
-                        products = state.data.products?: emptyList(),
-                        onProductClick = { id ->
+                    ExerciseListContent(
+                        exercises = state.data.exercises ?: emptyList(),
+                        onExerciseClick = { id ->
                             // Handle product click event
                         }
                     )
@@ -65,9 +72,9 @@ fun HomeScreen(
 }
 
 @Composable
-fun ProductListContent(
-    products: List<Product>,
-    onProductClick: (Int) -> Unit
+fun ExerciseListContent(
+    exercises: List<Exercise>,
+    onExerciseClick: (Int) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -75,10 +82,10 @@ fun ProductListContent(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        items(products, key = { it.id }) { product ->
-            ProductItem(
-                product = product,
-                onClick = { onProductClick(product.id) }
+        items(exercises) { exercise ->
+            ExerciseItem(
+                exercise = exercise,
+                onClick = { onExerciseClick(exercise.id) }
             )
         }
     }
@@ -86,9 +93,9 @@ fun ProductListContent(
 
 
 @Composable
-fun ProductItem(product: Product, onClick: () -> Unit) {
+fun ExerciseItem(exercise : Exercise, onClick: () -> Unit) {
     Text(
-        text = product.title,
+        text = exercise.name,
         modifier = Modifier.clickable(onClick = onClick)
             .padding(16.dp)
     )
