@@ -1,5 +1,7 @@
 package com.bpn.trainme.di
 
+import com.bpn.trainme.data.datasource.LocalExerciseDataSource
+import com.bpn.trainme.data.datasource.RemoteExerciseDataSource
 import com.bpn.trainme.data.remote.ExerciseApi
 import com.bpn.trainme.data.repository.ExerciseRepositoryImpl
 import com.bpn.trainme.domain.repository.ExerciseRepository
@@ -16,8 +18,11 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun providesExerciseRepository(api: ExerciseApi): ExerciseRepository {
-        return ExerciseRepositoryImpl(api)
+    fun providesExerciseRepository(
+        localExerciseDataSource: LocalExerciseDataSource,
+        remoteExerciseDataSource: RemoteExerciseDataSource
+    ): ExerciseRepository {
+        return ExerciseRepositoryImpl(localDataSource = localExerciseDataSource, remoteDataSource = remoteExerciseDataSource)
     }
 
     @Provides

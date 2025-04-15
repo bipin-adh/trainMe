@@ -12,6 +12,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -19,6 +20,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.LoadState
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.bpn.trainme.domain.model.Exercise
 import com.bpn.trainme.presentation.UiState
 
@@ -30,6 +33,16 @@ fun HomeScreen(
 ){
     val viewModel = hiltViewModel<HomeViewModel>()
     val uiState = viewModel.uiState.collectAsState()
+
+    val exercises = viewModel.exercises.collectAsLazyPagingItems()
+
+    val pullToRefreshState = rememberPullToRefreshState(
+        refreshing = exercises.loadState.refresh is LoadState.Loading,
+        onRefresh = {
+            viewModel.onPullToRefresh()
+            exercises.refresh()
+        }
+    )
 
     LaunchedEffect(Unit) {
         viewModel.eventFlow.collect { event->
