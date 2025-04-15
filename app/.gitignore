@@ -1,1 +1,96 @@
-/build
+# IntelliJ IDEA/Android Studio
+.idea/
+*.iml
+.idea/modules.xml
+.idea/deploymentTargetDropDown.xml
+.idea/misc.xml
+.idea/compiler.xml
+.idea/vcs.xml
+.idea/workspace.xml
+.idea/inspectionProfiles/
+.idea/codeStyles/
+.idea/runConfigurations/
+.idea/.name
+.idea/gradle.xml
+.idea/jarRepositories.xml
+.idea/navEditor.xml
+
+# Gradle
+.gradle/
+build/
+.gradle
+gradlew
+gradlew.bat
+gradle-wrapper.jar
+gradle-wrapper.properties
+
+# Android build outputs
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+output.json
+bin/
+gen/
+out/
+release/
+debug/
+
+# Local configuration files
+local.properties
+.keystore
+*.jks
+
+# Dependency directories
+/external/
+/libs/
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~.ncb
+*~.suo
+*.DS_Store
+
+# Crashlytics
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
+
+# Database files
+*.db
+*.sqlite
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Miscellaneous
+captures/
+*.orig
+*.rej
+Thumbs.db
+.DS_Store
+
+# Kotlin
+*.ktlint
+
+# Proguard
+proguard-rules.pro
+
+# Android Emulator snapshots
+*.avd
+*.img
+*.qcow2
+
+# Generated files
+generated/
