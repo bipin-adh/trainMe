@@ -1,29 +1,34 @@
 package com.bpn.trainme.presentation.navigation
 
 import androidx.navigation.NavController
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.receiveAsFlow
+import com.bpn.trainme.presentation.features.home.HomeDestination
+import com.bpn.trainme.presentation.features.login.LoginDestination
+import com.bpn.trainme.presentation.features.register.RegisterDestination
 
 class NavigationManager {
-    private val _navigationEvents = Channel<NavigationEvent>(Channel.BUFFERED)
-    val navigationEvents = _navigationEvents.receiveAsFlow()
+    private var navController : NavController ?= null
 
-    fun navigate(event: NavigationEvent){
-        _navigationEvents.trySend(event)
+    fun init(navController: NavController){
+        if(this.navController == null){
+            this.navController = navController
+        }else{
+            throw IllegalStateException("NavigationManager has already been initialized")
+        }
     }
 
-    sealed class NavigationEvent{
-        data class NavigateTo(val route: String): NavigationEvent()
-        data object PopBackStack: NavigationEvent()
+    fun navigateToLogin(){
+        navController?.navigate(LoginDestination)?: throw IllegalStateException("NavigationManager has not been initialized")
+    }
 
-        //add more events as needed like navigateup and clearbackstack
+    fun navigateToRegister(){
+        navController?.navigate(RegisterDestination)?: throw IllegalStateException("NavigationManager has not been initialized")
+    }
+
+    fun navigateToHome(){
+        navController?.navigate(HomeDestination)?: throw IllegalStateException("NavigationManager has not been initialized")
+    }
+
+    fun goBack(){
+        navController?.popBackStack()?: throw IllegalStateException("NavigationManager has not been initialized")
     }
 }
-
-fun NavController.handleNavigationEvents(event: NavigationManager.NavigationEvent){
-    when(event){
-        is NavigationManager.NavigationEvent.NavigateTo -> navigate(event.route)
-        is NavigationManager.NavigationEvent.PopBackStack -> popBackStack()
-    }
-}
-
