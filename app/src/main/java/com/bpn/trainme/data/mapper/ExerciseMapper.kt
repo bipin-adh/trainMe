@@ -7,40 +7,39 @@ import com.bpn.trainme.domain.model.Exercise
 object ExerciseMapper {
 
     fun toDomain(dto: ExerciseDto): Exercise =  Exercise(
-        id = dto.id ?: -1,
+        exerciseId = dto.exerciseId ?: "",
         name = dto.name?:"",
-        bodyPart = dto.bodyPart ?:"",
-        equipment = dto.equipment?:"",
         gifUrl = dto.gifUrl?:"",
-        target = dto.target?:"",
-        secondaryMuscles = dto.secondaryMuscles?: emptyList(),
-        instructions = dto.instructions ?: emptyList()
+        instructions = dto.instructions ?: emptyList(),
+        targetMuscles = dto.targetMuscles ?: emptyList(),
+        bodyParts = dto.bodyParts ?: emptyList(),
+        equipments = dto.equipments?: emptyList(),
+        secondaryMuscles = dto.secondaryMuscles?: emptyList()
     )
 
     fun toDomain(dto: ExerciseEntity): Exercise = Exercise(
-        id = dto.id,
+        exerciseId = dto.exerciseId,
         name = dto.name,
-        bodyPart = dto.bodyPart,
-        equipment = dto.equipment,
         gifUrl = dto.gifUrl,
-        target = dto.target,
-        secondaryMuscles = dto.secondaryMuscles.split(",").filter { it.isNotEmpty() },
-        instructions = dto.instructions.split(",").filter { it.isNotEmpty() }
+        instructions = dto.instructions,
+        targetMuscles = dto.targetMuscles,
+        bodyParts = dto.bodyParts,
+        equipments = dto.equipments,
+        secondaryMuscles = dto.secondaryMuscles
     )
 
     fun toEntity(dto: ExerciseDto, pageIndex: Int): ExerciseEntity?{
-        val id = dto.id ?: return null
+        val exerciseId = dto.exerciseId ?: return null
         return ExerciseEntity(
-            id = id,
+            exerciseId = exerciseId,
             name = dto.name?:"",
-            bodyPart = dto.bodyPart?:"",
-            equipment = dto.equipment?:"",
             gifUrl = dto.gifUrl?:"",
-            target = dto.target?:"",
-            secondaryMuscles = dto.secondaryMuscles?.joinToString(",") ?: "",
-            instructions = dto.instructions?.joinToString(",") ?: "",
+            instructions = dto.instructions?: emptyList(),
+            targetMuscles = dto.targetMuscles?: emptyList(),
+            bodyParts = dto.bodyParts ?: emptyList(),
+            equipments = dto.equipments?: emptyList(),
+            secondaryMuscles = dto.secondaryMuscles ?: emptyList(),
             pageIndex = pageIndex
         )
     }
-
 }
