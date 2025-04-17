@@ -19,6 +19,20 @@ TrainMe is a Jetpack Compose-based Android application that showcases a list of 
 
 ## 🏗️ Project Structure
 
+<pre>
+trainme/
+├── data/              # Local DB, network API, models, mappers
+│   ├── local/
+│   ├── remote/
+│   └── repository/
+├── domain/            # Use cases, entities, interfaces
+├── presentation/      # UI, ViewModels, Screens, Navigation
+│   └── components/
+├── di/                # Hilt modules
+├── ui/theme/          # Material 3 theme files
+├── utils/             # Utility classes and helpers
+└── MainActivity.kt    # App entry point
+</pre>
 
 ---
 
