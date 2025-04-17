@@ -1,1 +1,1 @@
-# My Awesome App
+# trainMe - Your fitness buddy
