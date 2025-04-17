@@ -1,12 +1,9 @@
 package com.bpn.trainme.data.datasource
 
-import android.util.Log
-import android.util.Log.e
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.bpn.trainme.data.mapper.ExerciseMapper
 import com.bpn.trainme.domain.model.Exercise
-import timber.log.Timber
 import java.net.UnknownHostException
 
 class MediatorPagingSource(
@@ -45,9 +42,6 @@ class MediatorPagingSource(
 
             val totalPages = response.data?.totalPages?:0
 
-
-            Timber.tag("remote").d("response: ${response.data}")
-
             if(response.success){
                 val entities = response.data?.exercises?.mapNotNull {
                     ExerciseMapper.toEntity(it, page)
@@ -65,9 +59,9 @@ class MediatorPagingSource(
                         prevKey = if (page > 0) page - 1 else null,
                         nextKey = if (exercises.size == PAGE_SIZE && page < totalPages - 1) page + 1 else null
                     )
-                }?: LoadResult.Error(Exception("errpr"))
+                }?: LoadResult.Error(Exception("Error fetching data"))
             }else{
-                LoadResult.Error(Exception("API returned eror"))
+                LoadResult.Error(Exception("Error fetching data"))
             }
 
         }catch (e: UnknownHostException){

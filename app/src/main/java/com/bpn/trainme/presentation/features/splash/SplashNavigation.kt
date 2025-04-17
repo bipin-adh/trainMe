@@ -28,7 +28,7 @@ data class SplashState(
 )
 
 sealed interface SplashUiEvent{
-    data class NavigateToHome(val id: String): SplashUiEvent
+    data object NavigateToHome: SplashUiEvent
     data object NavigateBack: SplashUiEvent
     data object NavigateToRegister: SplashUiEvent
     data object NavigateToLogin: SplashUiEvent

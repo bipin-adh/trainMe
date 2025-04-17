@@ -28,7 +28,9 @@ fun SplashScreen(
             when(event){
                 is SplashUiEvent.NavigateToLogin -> onNavigateToLogin()
                 is SplashUiEvent.NavigateBack -> {}
-                is SplashUiEvent.NavigateToHome -> {}
+                is SplashUiEvent.NavigateToHome -> {
+                    onNavigateToHome()
+                }
                 is SplashUiEvent.NavigateToRegister -> {}
             }
         }
@@ -41,7 +43,7 @@ fun SplashScreen(
     ) {
         Text(
             text = "Welcome to trainMe !!!" + "\n" +
-                    "Track your fitness with us.",
+                    "Your fitness buddy.",
             color = MaterialTheme.colorScheme.onPrimary,
             textAlign = TextAlign.Center
         )

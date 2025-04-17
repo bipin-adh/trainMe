@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.bpn.trainme.presentation.features.home.homeScreen
-import com.bpn.trainme.presentation.features.login.LoginDestination
 import com.bpn.trainme.presentation.features.login.loginScreen
 import com.bpn.trainme.presentation.features.register.registerScreen
 import com.bpn.trainme.presentation.features.splash.SplashDestination

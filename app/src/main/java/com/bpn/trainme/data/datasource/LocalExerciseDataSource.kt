@@ -22,4 +22,8 @@ class LocalExerciseDataSource(
     suspend fun insertExercises(exercises: List<ExerciseEntity>){
         dao.insertExercises(exercises = exercises)
     }
+
+    suspend fun clearExercises(){
+        dao.clearExercises()
+    }
 }

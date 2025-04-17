@@ -18,8 +18,8 @@ class SplashViewModel @Inject constructor(
 
     private fun startSplashTimer() {
         launchInViewModelScope {
-            delay(2000)
-            emitEvent(SplashUiEvent.NavigateToLogin)
+            delay(1000)
+            emitEvent(SplashUiEvent.NavigateToHome)
         }
     }
 }
