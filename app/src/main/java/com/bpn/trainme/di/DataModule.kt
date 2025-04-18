@@ -14,13 +14,12 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-
 @Module
 @InstallIn(SingletonComponent::class)
 object DataModule {
     @Provides
     @Singleton
-    fun provideExerciseDatabase(@ApplicationContext context: Context): ExerciseDatabase{
+    fun provideExerciseDatabase(@ApplicationContext context: Context): ExerciseDatabase {
         return Room.databaseBuilder(
             context,
             ExerciseDatabase::class.java,
@@ -34,10 +33,12 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideLocalExerciseDataSource(exerciseDao: ExerciseDao) = LocalExerciseDataSource(exerciseDao)
+    fun provideLocalExerciseDataSource(exerciseDao: ExerciseDao) =
+        LocalExerciseDataSource(exerciseDao)
 
     @Provides
     @Singleton
-    fun provideRemoteExerciseDataSource(exerciseApi: ExerciseApi) = RemoteExerciseDataSource(exerciseApi)
+    fun provideRemoteExerciseDataSource(exerciseApi: ExerciseApi) =
+        RemoteExerciseDataSource(exerciseApi)
 
 }

@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ExerciseRepository {
 
-     fun getExercises(): Flow<PagingData<Exercise>>
+    fun getExercises(): Flow<PagingData<Exercise>>
 
-     suspend fun clearExercises()
+    suspend fun clearExercises()
 }

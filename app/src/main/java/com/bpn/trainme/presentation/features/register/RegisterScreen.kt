@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 fun RegisterScreen(
     onNavigateToMain: () -> Unit,
     onNavigateToLogin: () -> Unit
-){
+) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -26,8 +26,10 @@ fun RegisterScreen(
                 }
             )
         }
-    ) { paddingValues->
-        Box( modifier = Modifier.fillMaxSize().padding(paddingValues)) {
+    ) { paddingValues ->
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues)) {
             Column {
                 Button(onClick = onNavigateToMain) {
                     Text(text = "Register")

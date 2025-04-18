@@ -11,22 +11,22 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
     onNavigateToMain: () -> Unit,
     onNavigateToRegister: () -> Unit
-){
+) {
     val viewModel = hiltViewModel<LoginViewModel>()
-    val uiState = viewModel.uiState.collectAsState()
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        viewModel.eventFlow.collect { event->
-            when(event){
+        viewModel.eventFlow.collect { event ->
+            when (event) {
                 is LoginUiEvent.NavigateToHome -> onNavigateToMain()
                 is LoginUiEvent.NavigateToRegister -> onNavigateToRegister()
                 is LoginUiEvent.NavigateBack -> {
@@ -44,8 +44,10 @@ fun LoginScreen(
                 }
             )
         }
-    ) { paddingValues->
-        Box( modifier = Modifier.fillMaxSize().padding(paddingValues)) {
+    ) { paddingValues ->
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues)) {
             Column {
                 Button(onClick = onNavigateToMain) {
                     Text(text = "Login")

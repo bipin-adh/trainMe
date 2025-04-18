@@ -16,12 +16,12 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.bpn.trainme.domain.model.Exercise
@@ -32,11 +32,11 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeScreen(
     onNavigateToSettings: () -> Unit
-){
+) {
     val viewModel = hiltViewModel<HomeViewModel>()
 
     val scope = rememberCoroutineScope()
-    val uiState = viewModel.uiState.collectAsState()
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 
     val exercises = viewModel.exercises.collectAsLazyPagingItems()
 
@@ -44,8 +44,8 @@ fun HomeScreen(
     val pullToRefreshState = rememberPullToRefreshState()
 
     LaunchedEffect(Unit) {
-        viewModel.eventFlow.collect { event->
-            when(event){
+        viewModel.eventFlow.collect { event ->
+            when (event) {
                 is HomeUiEvent.NavigateToSettings -> onNavigateToSettings()
             }
         }
@@ -59,7 +59,7 @@ fun HomeScreen(
                 }
             )
         }
-    ) { paddingValues->
+    ) { paddingValues ->
 
         PullToRefreshBox(
             isRefreshing = isRefreshing,
@@ -79,14 +79,20 @@ fun HomeScreen(
                     state = pullToRefreshState
                 )
             },
-        ){
+        ) {
             LazyColumn(
-                modifier = Modifier.fillMaxSize().padding(paddingValues)
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
             ) {
-                items(exercises.itemCount) { index ->
+                items(
+                    count = exercises.itemCount,
+                    key = { index -> exercises[index]?.exerciseId ?: index }
+                ) { index ->
                     val exercise = exercises[index]
                     exercise?.let {
-                        ExerciseItem(exercise = exercise,
+                        ExerciseItem(
+                            exercise = exercise,
                             onClick = {
 
                             })
@@ -102,9 +108,11 @@ fun HomeScreen(
                                 .padding(16.dp)
                         )
                     }
+
                     is LoadState.Error -> item {
                         Text("Error: ${state.error.message}")
                     }
+
                     else -> {}
                 }
             }
@@ -114,10 +122,11 @@ fun HomeScreen(
 }
 
 @Composable
-fun ExerciseItem(exercise : Exercise, onClick: () -> Unit) {
+fun ExerciseItem(exercise: Exercise, onClick: () -> Unit) {
     Text(
         text = exercise.name,
-        modifier = Modifier.clickable(onClick = onClick)
+        modifier = Modifier
+            .clickable(onClick = onClick)
             .padding(16.dp)
     )
 }

@@ -10,8 +10,8 @@ data object RegisterDestination
 fun NavGraphBuilder.registerScreen(
     onNavigateToMain: () -> Unit,
     onNavigateToLogin: () -> Unit
-){
-    composable<RegisterDestination>{
+) {
+    composable<RegisterDestination> {
         RegisterScreen(
             onNavigateToMain = onNavigateToMain,
             onNavigateToLogin = onNavigateToLogin

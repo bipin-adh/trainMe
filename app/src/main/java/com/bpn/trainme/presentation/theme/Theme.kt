@@ -94,20 +94,19 @@ enum class FitnessTheme {
 fun TrainMeTheme(
     theme: FitnessTheme = FitnessTheme.SpotifyPulse,
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-//    dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
     val context = LocalContext.current
 
-    val colorScheme = when(theme){
+    val colorScheme = when (theme) {
         FitnessTheme.SpotifyPulse -> if (darkTheme) SpotifyPulseDark else SpotifyPulseLight
         FitnessTheme.NightSprint -> if (darkTheme) NightSprintDark else NightSprintLight
         FitnessTheme.PowerForge -> if (darkTheme) PowerForgeDark else PowerForgeLight
-        FitnessTheme.Dynamic -> when{
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ->{
+        FitnessTheme.Dynamic -> when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
                 if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
             }
+
             else -> if (darkTheme) SpotifyPulseDark else SpotifyPulseLight // fallback to SpotifyPulse
         }
     }

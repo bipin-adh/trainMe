@@ -2,7 +2,9 @@ package com.bpn.trainme.data.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.serialization.Serializable
 
+@Serializable
 @Entity(tableName = "exercises")
 data class ExerciseEntity(
     @PrimaryKey val exerciseId: String,
@@ -13,5 +15,5 @@ data class ExerciseEntity(
     val bodyParts: List<String>,
     val equipments: List<String>,
     val secondaryMuscles: List<String>,
-    val pageIndex: Int // tracks page for pagination
+    val paginationIndex: Int // tracks page for pagination
 )
