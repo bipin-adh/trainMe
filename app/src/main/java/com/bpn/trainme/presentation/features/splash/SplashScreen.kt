@@ -78,7 +78,7 @@ fun SplashScreen(
         }
 
         delay(600) // wait for bounce to complete and navigate to main dashboard
-//        onNavigateToHome()
+        onNavigateToHome()
     }
 
 
