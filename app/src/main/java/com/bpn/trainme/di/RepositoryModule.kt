@@ -2,7 +2,6 @@ package com.bpn.trainme.di
 
 import com.bpn.trainme.data.datasource.LocalExerciseDataSource
 import com.bpn.trainme.data.datasource.RemoteExerciseDataSource
-import com.bpn.trainme.data.remote.ExerciseApi
 import com.bpn.trainme.data.repository.ExerciseRepositoryImpl
 import com.bpn.trainme.domain.repository.ExerciseRepository
 import com.bpn.trainme.presentation.navigation.NavigationManager
@@ -22,12 +21,15 @@ object RepositoryModule {
         localExerciseDataSource: LocalExerciseDataSource,
         remoteExerciseDataSource: RemoteExerciseDataSource
     ): ExerciseRepository {
-        return ExerciseRepositoryImpl(localDataSource = localExerciseDataSource, remoteDataSource = remoteExerciseDataSource)
+        return ExerciseRepositoryImpl(
+            localDataSource = localExerciseDataSource,
+            remoteDataSource = remoteExerciseDataSource
+        )
     }
 
     @Provides
     @Singleton
-    fun provideNavigationManager(): NavigationManager{
+    fun provideNavigationManager(): NavigationManager {
         return NavigationManager()
     }
 }

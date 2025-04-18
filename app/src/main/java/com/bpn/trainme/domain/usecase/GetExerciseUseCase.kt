@@ -9,7 +9,7 @@ import javax.inject.Inject
 class GetExerciseUseCase @Inject constructor(
     private val repository: ExerciseRepository
 ) {
-     operator fun invoke() : Flow<PagingData<Exercise>> {
+    operator fun invoke(): Flow<PagingData<Exercise>> {
         return repository.getExercises()
     }
 }

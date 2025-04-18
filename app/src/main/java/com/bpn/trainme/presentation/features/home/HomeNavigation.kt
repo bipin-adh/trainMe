@@ -18,9 +18,8 @@ fun NavGraphBuilder.homeScreen(
     }
 }
 
-
 data class HomeState(
-    val exercises : List<Exercise>? = null
+    val exercises: List<Exercise>? = null
 )
 
 sealed interface HomeUiEvent {

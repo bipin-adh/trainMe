@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
 @Database(entities = [ExerciseEntity::class], version = 1, exportSchema = false)
-@TypeConverters(Converters::class)
+@TypeConverters(ListStringConverter::class)
 abstract class ExerciseDatabase : RoomDatabase() {
-    abstract fun exerciseDao() : ExerciseDao
+    abstract fun exerciseDao(): ExerciseDao
 }

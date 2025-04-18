@@ -11,13 +11,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getExerciseUseCase: GetExerciseUseCase,
+    getExerciseUseCase: GetExerciseUseCase,
     private val deleteAllExercisesUseCase: DeleteAllExercisesUseCase
 ) : BaseViewModel<HomeState, HomeUiEvent>() {
 
-    val exercises : Flow<PagingData<Exercise>> = getExerciseUseCase()
+    val exercises: Flow<PagingData<Exercise>> = getExerciseUseCase()
 
-    fun onPullToRefresh(){
+    fun onPullToRefresh() {
         launchInViewModelScope {
             deleteAllExercisesUseCase()
         }

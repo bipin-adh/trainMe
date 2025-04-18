@@ -15,13 +15,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.bpn.trainme.R
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -30,21 +32,22 @@ import kotlinx.coroutines.launch
 fun SplashScreen(
     onNavigateToLogin: () -> Unit,
     onNavigateToHome: () -> Unit
-    ){
+) {
     val viewModel = hiltViewModel<SplashViewModel>()
-    val uiState = viewModel.uiState.collectAsState()
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 
     val trainOffset = remember { Animatable(-1000f) } // start off-screen left
     val meOffset = remember { Animatable(1000f) } // start off-screen right
 
     LaunchedEffect(Unit) {
-        viewModel.eventFlow.collect { event->
-            when(event){
+        viewModel.eventFlow.collect { event ->
+            when (event) {
                 is SplashUiEvent.NavigateToLogin -> onNavigateToLogin()
                 is SplashUiEvent.NavigateBack -> {}
                 is SplashUiEvent.NavigateToHome -> {
                     onNavigateToHome()
                 }
+
                 is SplashUiEvent.NavigateToRegister -> {}
             }
         }
@@ -78,17 +81,12 @@ fun SplashScreen(
         onNavigateToHome()
     }
 
-
     Box(
-        modifier = Modifier.fillMaxSize().background(
-//            brush = Brush.verticalGradient(
-//                colors = listOf(
-//                    MaterialTheme.colorScheme.primary,
-//                    MaterialTheme.colorScheme.background
-//                )
-//            )
-            color = MaterialTheme.colorScheme.background
-        ),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                color = MaterialTheme.colorScheme.background
+            ),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -102,14 +100,14 @@ fun SplashScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "train",
+                    text = stringResource(R.string.train),
                     color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.displayLarge,
                     modifier = Modifier.offset(x = trainOffset.value.dp)
                 )
 
                 Text(
-                    text = "Me",
+                    text = stringResource(R.string.me),
                     color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.displayLarge,
                     modifier = Modifier.offset(x = meOffset.value.dp)
@@ -117,8 +115,7 @@ fun SplashScreen(
             }
 
             Text(
-                text = "Welcome to trainMe !!!" + "\n" +
-                        "Your fitness buddy.",
+                text = stringResource(R.string.welcome_to_train_me),
                 color = MaterialTheme.colorScheme.primary,
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center

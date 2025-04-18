@@ -25,10 +25,10 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             DisposableEffect(navController) {
                 navigationManager.init(navController)
-                onDispose {  }
+                onDispose { }
             }
             TrainMeTheme {
-                AppRoot(navController = navController,navigationManager = navigationManager)
+                AppRoot(navController = navController, navigationManager = navigationManager)
             }
         }
     }

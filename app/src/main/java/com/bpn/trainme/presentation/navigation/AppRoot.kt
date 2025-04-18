@@ -15,7 +15,7 @@ fun AppRoot(navigationManager: NavigationManager, navController: NavHostControll
     NavHost(
         navController = navController,
         startDestination = SplashDestination
-    ){
+    ) {
         splashScreen(
             onNavigateToLogin = {
                 navigationManager.navigateToLogin()
