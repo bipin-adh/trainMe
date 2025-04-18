@@ -1,12 +1,12 @@
 package com.bpn.trainme.domain.model
 
 data class Exercise(
-    val id : Int,
+    val exerciseId : String,
     val name : String,
-    val bodyPart : String,
-    val equipment : String,
     val gifUrl : String,
-    val target : String,
-    val secondaryMuscles : List<String>,
-    val instructions : List<String>
+    val instructions : List<String>,
+    val targetMuscles : List<String>,
+    val bodyParts : List<String>,
+    val equipments : List<String>,
+    val secondaryMuscles : List<String>
 )

@@ -2,10 +2,18 @@ package com.bpn.trainme.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+// Colors for Spotify Pulse
+ val SpotifyGreen = Color(0xFF1DB954)
+ val NeonPink = Color(0xFFFF2D55)
+ val SpotifyBlack = Color(0xFF121212)
+ val White = Color(0xFFFFFFFF)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+// Colors for Night Sprint
+ val DeepIndigo = Color(0xFF1A237E)
+ val NeonOrange = Color(0xFFFF3D00)
+ val MidnightBlack = Color(0xFF0A0A0A)
+
+// Colors for Power Forge
+ val FieryRed = Color(0xFFD32F2F)
+ val SteelGray = Color(0xFFB0BEC5)
+ val DarkGray = Color(0xFF1C2526)

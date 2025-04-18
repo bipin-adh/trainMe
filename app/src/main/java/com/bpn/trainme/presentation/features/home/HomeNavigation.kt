@@ -5,7 +5,6 @@ import androidx.navigation.compose.composable
 import com.bpn.trainme.domain.model.Exercise
 import kotlinx.serialization.Serializable
 
-
 @Serializable
 data object HomeDestination
 

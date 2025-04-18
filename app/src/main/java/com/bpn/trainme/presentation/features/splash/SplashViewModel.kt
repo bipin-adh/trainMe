@@ -13,13 +13,13 @@ class SplashViewModel @Inject constructor(
 
     init {
         updateState(UiState.Idle)
-        startSplashTimer()
+//        startSplashTimer()
     }
 
-    private fun startSplashTimer() {
-        launchInViewModelScope {
-            delay(2000)
-            emitEvent(SplashUiEvent.NavigateToLogin)
-        }
-    }
+//    private fun startSplashTimer() {
+//        launchInViewModelScope {
+//            delay(1000)
+//            emitEvent(SplashUiEvent.NavigateToHome)
+//        }
+//    }
 }

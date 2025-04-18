@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import com.bpn.trainme.presentation.features.home.HomeDestination
 import com.bpn.trainme.presentation.features.login.LoginDestination
 import com.bpn.trainme.presentation.features.register.RegisterDestination
+import com.bpn.trainme.presentation.features.splash.SplashDestination
 
 class NavigationManager {
     private var navController : NavController ?= null
@@ -25,7 +26,11 @@ class NavigationManager {
     }
 
     fun navigateToHome(){
-        navController?.navigate(HomeDestination)?: throw IllegalStateException("NavigationManager has not been initialized")
+        navController?.navigate(HomeDestination){
+            popUpTo(SplashDestination){
+                inclusive = true
+            }
+        }?: throw IllegalStateException("NavigationManager has not been initialized")
     }
 
     fun goBack(){
